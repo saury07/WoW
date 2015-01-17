@@ -38,6 +38,7 @@ function AddNewMonitoredUnits()
 
         end
         Bubble_Frame_Names:SetText(table.concat(names,"\n"));
+        print(Bubble_Frame_Names:GetText());
         Bubble_Frame_Values:SetText(table.concat(values,"\n"));
     else
         Bubble_Frame:SetHeight(BaseHeight);
@@ -70,12 +71,19 @@ function GetAllShields()
 end
 
 function GetAllUnitsInParty()
-    if not IsInGroup() then
+    if not IsInGroup() and not IsInRaid() then
         return {"player"};
+    end
+    if IsInRaid() then
+        local ret = {};
+        for i=1,GetNumGroupMembers() do
+            ret[i] = "raid"..i;
+        end
+        return ret;
     else
         local ret = {};
         ret[1] = "player";
-        for i=1,GetNumGroupMembers()-1 do
+        for i=1,GetNumGroupMembers() do
             ret[i+1] = "party"..i;
         end
         return ret;

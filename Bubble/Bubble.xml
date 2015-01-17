@@ -23,7 +23,7 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-                <FontString name="$parent_Names" inherits="GameFontNormal">
+                <FontString name="$parent_Names" inherits="GameFontNormal" justifyH="LEFT">
                     <Anchors>
                         <Anchor point="CENTER"/>
                         <Anchor point="BOTTOMLEFT">
