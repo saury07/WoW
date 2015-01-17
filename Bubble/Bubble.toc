@@ -1,0 +1,6 @@
+## Interface: 60000
+## Title: Bubble
+## Notes: Bubble. For priest, by a priest.
+## Version: 0.1
+Bubble.xml
+Bubble.lua

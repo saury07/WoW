@@ -1,0 +1,53 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+    <Script File="Bubble.lua"/>
+    <Frame Name="Bubble_Frame" enableMouse="true" movable="true">
+        <Size>
+            <AbsDimension x="200" y="30"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture>
+                    <Color a="0.5" r="0" g="0" b="0"/>
+                </Texture>
+            </Layer>
+
+            <Layer level="OVERLAY">
+                <FontString name="$parent_Title" parentKey="title" inherits="GameFontNormal" text="Bubble">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset x="0" y="-10"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_Names" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                        <Anchor point="BOTTOMLEFT">
+                            <Offset x="10" y="10"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color a="1" r="1" g="1" b="1"/>
+                </FontString>
+                <FontString name="$parent_Values" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                        <Anchor point="BOTTOMRIGHT">
+                            <Offset x="-10" y="10"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color a="1" r="1" g="1" b="1"/>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad>self.TimeSinceLastUpdate = 0;self:RegisterForDrag("LeftButton");Bubble_OnLoad();</OnLoad>
+            <OnUpdate function="Bubble_OnUpdate"/>
+            <OnDragStart>self:StartMoving();</OnDragStart>
+            <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+        </Scripts>
+    </Frame>
+</Ui>
