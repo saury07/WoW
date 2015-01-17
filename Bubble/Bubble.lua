@@ -2,7 +2,7 @@
 Bubble_UpdateInterval = 0.5; -- How often the OnUpdate code will run (in seconds)
 CurrentMonitoredPlayersCount = 0;
 CurrentMonitoredPlayers = {};
-CellHeight = 25;
+CellHeight = 12;
 BaseHeight = 30;
 NAME = "NAME";
 PWS = "PWS";
@@ -38,7 +38,6 @@ function AddNewMonitoredUnits()
 
         end
         Bubble_Frame_Names:SetText(table.concat(names,"\n"));
-        print(Bubble_Frame_Names:GetText());
         Bubble_Frame_Values:SetText(table.concat(values,"\n"));
     else
         Bubble_Frame:SetHeight(BaseHeight);
@@ -48,7 +47,6 @@ function AddNewMonitoredUnits()
 end
 
 function Bubble_OnLoad()
-    print("Bubble loaded succesfully !");
     Bubble_Frame_Title:SetFont("Fonts\\FRIZQT__.TTF",9);
     Bubble_Frame_Names:SetFont("Fonts\\FRIZQT__.TTF",9);
     Bubble_Frame_Values:SetFont("Fonts\\FRIZQT__.TTF",9);
