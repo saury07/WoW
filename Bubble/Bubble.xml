@@ -16,14 +16,8 @@
             <BackgroundInsets left="3" right="3" top="3" bottom="3"/>
         </Backdrop>
         <Layers>
-            <Layer level="BACKGROUND">
-                <Texture>
-                    <!--<Color a="0.3" r="0" g="0" b="0"/>-->
-                </Texture>
-            </Layer>
-
             <Layer level="OVERLAY">
-                <FontString name="$parent_Title" parentKey="title" inherits="GameFontNormal" text="Bubble">
+                <FontString name="$parent_Title" parentKey="title" inherits="GameFontNormal" text="Bubble" >
                     <Anchors>
                         <Anchor point="TOP">
                             <Offset x="0" y="-10"/>

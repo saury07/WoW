@@ -4,7 +4,7 @@ CurrentMonitoredPlayersCount = 0;
 CurrentMonitoredPlayers = {};
 CellHeight = 12;
 BaseHeight = 30;
-NAME = "NAME";
+BUBBLE_NAME = "NAME";
 PWS = "PWS";
 CLARITY = "CLARITY";
 
@@ -25,7 +25,7 @@ function AddNewMonitoredUnits()
         local names = {};
         local values = {};
         for i=1,#allPWS do
-            names[i] = UnitName(allPWS[i][NAME]);
+            names[i] = UnitName(allPWS[i][BUBBLE_NAME]);
             local pws = allPWS[i][PWS];
             local clarity = allPWS[i][CLARITY];
             if pws > 0 and clarity > 0 then
@@ -59,7 +59,7 @@ function GetAllShields()
         local pws, clarity = GetShields(units[i]);
         if pws > 0 or clarity > 0 then
             local table = {};
-            table[NAME] = UnitName(units[i]);
+            table[BUBBLE_NAME] = UnitName(units[i]);
             table[PWS] = pws;
             table[CLARITY] = clarity;
             ret[#ret+1]=table;
@@ -102,4 +102,13 @@ function GetShields(unit)
         clarity = value2;
     end
     return pws,clarity;
+end
+
+SLASH_BUBBLE1 = '/bubble';
+function SlashCmdList.BUBBLE(msg, editbox)
+    if Bubble_Frame:IsVisible() then
+        Bubble_Frame:Hide();
+    else
+        Bubble_Frame:Show();
+    end
 end
