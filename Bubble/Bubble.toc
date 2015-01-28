@@ -2,5 +2,6 @@
 ## Title: Bubble
 ## Notes: Bubble. For priest, by a priest.
 ## Version: 0.1
+## SavedVariablesPerCharacter: BubbleSettings
 Bubble.xml
 Bubble.lua

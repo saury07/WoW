@@ -1,5 +1,9 @@
 -- Globals Section
 Bubble_UpdateInterval = 0.5; -- How often the OnUpdate code will run (in seconds)
+BubbleSettings = nil;
+local SHOW_SPEC_1 = "SHOW_SPEC_1";
+local SHOW_SPEC_2 = "SHOW_SPEC_2";
+
 CurrentMonitoredPlayersCount = 0;
 CurrentMonitoredPlayers = {};
 CellHeight = 12;
@@ -7,6 +11,8 @@ BaseHeight = 30;
 BUBBLE_NAME = "NAME";
 PWS = "PWS";
 CLARITY = "CLARITY";
+
+
 
 -- Functions Section
 function Bubble_OnUpdate(self, elapsed)
@@ -50,6 +56,8 @@ function Bubble_OnLoad()
     Bubble_Frame_Title:SetFont("Fonts\\FRIZQT__.TTF",9);
     Bubble_Frame_Names:SetFont("Fonts\\FRIZQT__.TTF",9);
     Bubble_Frame_Values:SetFont("Fonts\\FRIZQT__.TTF",9);
+    Bubble_Frame:RegisterEvent("ADDON_LOADED");
+    Bubble_Frame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED");
 end
 
 function GetAllShields()
@@ -93,22 +101,71 @@ function GetShields(unit)
     shouldConsolidate, spellId, canApplyAura, isBossDebuff, value1, value2, value3 = UnitBuff(unit,GetSpellInfo("17"));
     local pws = -1;
     local clarity = -1;
-    if spellId then
+    if spellId and unitCaster == "player" then
         pws = value2;
     end
     name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable,
     shouldConsolidate, spellId, canApplyAura, isBossDebuff, value1, value2, value3 = UnitBuff(unit,GetSpellInfo("152118"));
-    if spellId then
+    if spellId and unitCaster == "player" then
         clarity = value2;
     end
     return pws,clarity;
 end
 
+function SetSetting(key,value)
+    if BubbleSettings == nil then
+        BubbleSettings = {};
+    end
+    BubbleSettings[key] = value;
+end
+
+function GetSetting(key)
+    if BubbleSettings == nil then return nil; end;
+    return BubbleSettings[key];
+end
+
+function SetDisplay(value)
+    if value then
+        Bubble_Frame:Show();
+    else
+        Bubble_Frame:Hide();
+    end
+end
+
+function SaveDisplayProperty(value)
+    local currentSpec = GetSpecialization();
+    if currentSpec == 1 then
+        SetSetting(SHOW_SPEC_1,value);
+    else
+        SetSetting(SHOW_SPEC_2,value);
+    end
+end
+
+function DisplayBasedOnSpec(spec)
+    if (spec == 1 and GetSetting(SHOW_SPEC_1)) or (spec == 2 and GetSetting(SHOW_SPEC_2)) then
+        SetDisplay(true);
+    else
+        SetDisplay(false);
+    end
+end
+
+function Bubble_OnEvent(self,event, ...)
+    local arg1 = ...;
+    if event == "ADDON_LOADED" and arg1 == "Bubble" then
+        DisplayBasedOnSpec(GetSpecialization());
+    end
+    if event == "ACTIVE_TALENT_GROUP_CHANGED" then
+        DisplayBasedOnSpec(arg1);
+    end
+end
+
 SLASH_BUBBLE1 = '/bubble';
 function SlashCmdList.BUBBLE(msg, editbox)
     if Bubble_Frame:IsVisible() then
-        Bubble_Frame:Hide();
+        SetDisplay(false);
+        SaveDisplayProperty(false);
     else
-        Bubble_Frame:Show();
+        SetDisplay(true);
+        SaveDisplayProperty(true);
     end
 end

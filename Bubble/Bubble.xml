@@ -3,7 +3,7 @@
     <Script File="Bubble.lua"/>
     <Frame Name="Bubble_Frame" enableMouse="true" movable="true">
         <Size>
-            <AbsDimension x="200" y="30"/>
+            <AbsDimension x="150" y="30"/>
         </Size>
         <Anchors>
             <Anchor point="CENTER"/>
@@ -47,6 +47,7 @@
         <Scripts>
             <OnLoad>self.TimeSinceLastUpdate = 0;self:RegisterForDrag("LeftButton");Bubble_OnLoad();</OnLoad>
             <OnUpdate function="Bubble_OnUpdate"/>
+            <OnEvent function="Bubble_OnEvent"/>
             <OnDragStart>self:StartMoving();</OnDragStart>
             <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
         </Scripts>
